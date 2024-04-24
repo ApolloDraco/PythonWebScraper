@@ -1,0 +1,27 @@
+import requests
+from bs4 import BeautifulSoup
+
+def scrape_website(url):
+    # Send a GET request to the specified URL
+    response = requests.get(url)
+    
+    # Check if the request was successful (status code 200)
+    if response.status_code == 200:
+        # Parse the HTML content of the page
+        soup = BeautifulSoup(response.text, 'html.parser')
+        
+        # Find all the titles of articles (assuming they are in h2 tags)
+        article_titles = soup.find_all('h2')
+        
+        # Extract and print the titles
+        for title in article_titles:
+            print(title.text.strip())
+    else:
+        print("Failed to retrieve the webpage.")
+
+if __name__ == "__main__":
+    # Specify the URL of the website to scrape
+    website_url = "https://example.com/blog"
+    
+    # Call the function to scrape the website
+    scrape_website(website_url)
